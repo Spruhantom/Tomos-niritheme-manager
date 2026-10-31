@@ -1,0 +1,3 @@
+niri-theme-manager usr/bin/
+niri_theme_manager.py usr/share/niri-theme-manager/
+niri-theme-manager.desktop usr/share/applications/
