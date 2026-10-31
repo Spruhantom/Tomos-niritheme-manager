@@ -22,19 +22,49 @@ Then run the one-line installer:
 curl -fsSL https://raw.githubusercontent.com/Spruhantom/Tomos-niritheme-manager/main/install-arch.sh | bash
 ```
 
-This downloads and runs the installer directly from this repository. For safety,
-review `install-arch.sh` before executing it if you want to inspect the commands.
-
-The installer clones the repository into a temporary directory and builds and
-installs the package using `makepkg`.
+The installer clones this repository into a temporary directory and builds and
+installs the package using `makepkg`. Review `install-arch.sh` before running a
+remote installer if you prefer to inspect the commands first.
 
 To build the package manually:
 
 ```bash
 git clone https://github.com/Spruhantom/Tomos-niritheme-manager.git
 cd Tomos-niritheme-manager
-makepkg --syncdeps --install
+makepkg -si
 ```
+
+## Debian / Ubuntu (.deb)
+
+Install a downloaded package with:
+
+```bash
+sudo apt install ./niri-theme-manager_0.1.0-1_all.deb
+```
+
+To build from a source checkout, install `dpkg-deb` and run:
+
+```bash
+packaging/build-deb.sh
+```
+
+## Fedora / RPM-based distributions (.rpm)
+
+Install a downloaded package with:
+
+```bash
+sudo dnf install ./niri-theme-manager-0.1.0-1*.noarch.rpm
+```
+
+To build from source, install `rpm-build` and `python3-tkinter`, then run:
+
+```bash
+packaging/build-rpm.sh
+```
+
+GitHub Actions builds both package formats and publishes them as downloadable
+workflow artifacts. The Debian package is architecture-independent (`all`);
+the RPM is architecture-independent (`noarch`).
 
 ## How it works
 
@@ -50,9 +80,7 @@ makes timestamped backups of files it changes. If `niri validate` is available
 and validation fails, it restores the previous files.
 
 Existing settings are preserved. The include is appended to the config so these
-theme values take precedence over earlier settings. This changes Niri compositor
-settings (focus ring, gaps, border state and overview backdrop); it does not
-re-theme applications or desktop panels.
+theme values take precedence over earlier settings.
 
 ## Requirements
 
@@ -60,7 +88,7 @@ re-theme applications or desktop panels.
 - Python 3.10+
 - Tkinter (`tk` on Arch Linux)
 - Niri on PATH for automatic validation (optional)
-- `xdg-utils` to open the configuration folder from the app (optional)
+- `xdg-utils` to open the Niri configuration folder from the app (optional)
 
 ## Run from source
 
@@ -73,8 +101,6 @@ python3 niri_theme_manager.py
 ```bash
 python3 -m unittest discover -s tests -v
 ```
-
-The Arch package's `check()` function runs this test suite during `makepkg`.
 
 ## License
 
