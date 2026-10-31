@@ -6,11 +6,12 @@ License:        MIT
 URL:            https://github.com/Spruhantom/Tomos-niritheme-manager
 Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  python3-tkinter
 Requires:       python3 >= 3.10
 %if 0%{?suse_version}
+BuildRequires:  python3-tk
 Requires:       python3-tk
 %else
+BuildRequires:  python3-tkinter
 Requires:       python3-tkinter
 %endif
 Recommends:     niri
