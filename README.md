@@ -19,8 +19,11 @@ Run the universal installer:
 curl -fsSL https://raw.githubusercontent.com/Spruhantom/Tomos-niritheme-manager/main/install-linux.sh | bash
 ```
 
-The script uses `sudo` when needed, or can be run as root. It installs build
-dependencies through the detected distribution's package manager. Review
+The script uses `sudo` when needed. On Arch-based distributions, run it as a
+normal user (not with `sudo`) so `makepkg` is never run as root; on other
+supported distributions it can be run as root or as a normal user with `sudo`.
+It checks for Python 3.10+ before building and installs build dependencies
+through the detected distribution's package manager. Review
 `install-linux.sh` before piping it into Bash if you want to inspect it first.
 
 Unsupported distributions are stopped with a clear message; the installer does
