@@ -1,0 +1,38 @@
+name: Build Linux packages
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  deb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Debian package
+        run: packaging/build-deb.sh
+      - name: Inspect package
+        run: dpkg-deb --contents dist/niri-theme-manager_0.1.0-1_all.deb
+      - uses: actions/upload-artifact@v4
+        with:
+          name: debian-package
+          path: dist/*.deb
+
+  rpm:
+    runs-on: ubuntu-latest
+    container: fedora:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install RPM build tools
+        run: dnf install -y rpm-build python3-tkinter
+      - name: Build RPM package
+        run: packaging/build-rpm.sh
+      - name: Inspect package
+        run: rpm -qpl dist/*.rpm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rpm-package
+          path: dist/*.rpm
