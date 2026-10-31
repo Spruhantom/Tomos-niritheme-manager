@@ -12,6 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install test dependencies
+        run: sudo apt-get update && sudo apt-get install -y python3-tk
+      - name: Validate Python and shell scripts
+        run: |
+          python3 -m py_compile niri_theme_manager.py tests/test_config.py
+          python3 -m unittest discover -s tests -v
+          bash -n install-linux.sh install-arch.sh packaging/build-deb.sh packaging/build-rpm.sh
+          sh -n run.sh
       - name: Build Debian package
         run: bash packaging/build-deb.sh
       - name: Inspect package
