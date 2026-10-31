@@ -15,6 +15,10 @@ makedepends=('git')
 source=("${pkgname}::git+https://github.com/Spruhantom/Tomos-niritheme-manager.git#branch=main")
 sha256sums=('SKIP')
 
+check() {
+  python -m unittest discover -s tests -v
+}
+
 package() {
   install -Dm755 "$srcdir/$pkgname/niri-theme-manager" \
     "$pkgdir/usr/bin/niri-theme-manager"
