@@ -30,6 +30,11 @@ as_root() {
 echo "Detected distribution: ${PRETTY_NAME:-$DISTRO_ID}"
 
 if [[ "$FAMILY" =~ (arch|manjaro|endeavouros) ]]; then
+  if [[ "$(id -u)" -eq 0 ]]; then
+    echo "On Arch-based systems, run this installer as a normal user (not with sudo)." >&2
+    echo "The script will use sudo for package installation and makepkg will run safely as your user." >&2
+    exit 1
+  fi
   as_root pacman -S --needed --noconfirm git base-devel tk
   command -v makepkg >/dev/null 2>&1 || { echo "makepkg is unavailable; install base-devel." >&2; exit 1; }
   git clone --depth 1 "$REPO_URL" "$WORKDIR/source"
