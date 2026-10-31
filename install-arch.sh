@@ -14,6 +14,10 @@ if ! command -v git >/dev/null 2>&1; then
   printf '%s\n' 'Git is required. Install it with: sudo pacman -S git' >&2
   exit 1
 fi
+if [[ "$(id -u)" -eq 0 ]]; then
+  printf '%s\\n' 'Do not run this installer as root; makepkg must run as a normal user.' >&2
+  exit 1
+fi
 if ! command -v makepkg >/dev/null 2>&1; then
   printf '%s\n' 'makepkg is required. Install the base-devel group first.' >&2
   exit 1
