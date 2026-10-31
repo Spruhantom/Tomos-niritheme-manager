@@ -1,0 +1,5 @@
+niri-theme-manager (0.1.0-1) unstable; urgency=medium
+
+  * Initial Debian package.
+
+ -- Tom's Tech Support <tom@tomserver.co.uk>  Sat, 31 Oct 2026 18:30:00 +0000
