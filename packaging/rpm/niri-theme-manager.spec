@@ -8,7 +8,11 @@ Source0:        %{name}-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  python3-tkinter
 Requires:       python3 >= 3.10
+%if 0%{?suse_version}
+Requires:       python3-tk
+%else
 Requires:       python3-tkinter
+%endif
 Recommends:     niri
 
 %description
