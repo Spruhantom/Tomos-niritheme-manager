@@ -9,7 +9,7 @@ TAR="$TOPDIR/SOURCES/niri-theme-manager-0.1.0.tar.gz"
 tar --exclude="$(basename "$ROOT")/dist" \
   --exclude="$(basename "$ROOT")/__pycache__" \
   --exclude="$(basename "$ROOT")/.git" \
-  --transform="s,^$(basename "$ROOT"),$(basename "$ROOT")-0.1.0," \
+  --transform="s,^$(basename "$ROOT"),niri-theme-manager-0.1.0," \
   -czf "$TAR" -C "$(dirname "$ROOT")" "$(basename "$ROOT")"
 rpmbuild -ba "$ROOT/packaging/rpm/niri-theme-manager.spec" \
   --define "_topdir $TOPDIR" --define "_sourcedir $TOPDIR/SOURCES"
