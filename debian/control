@@ -1,0 +1,16 @@
+Source: niri-theme-manager
+Section: utils
+Priority: optional
+Maintainer: Tom's Tech Support <tom@tomserver.co.uk>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
+Homepage: https://github.com/Spruhantom/Tomos-niritheme-manager
+
+Package: niri-theme-manager
+Architecture: all
+Depends: python3 (>= 3.10), python3-tk, ${misc:Depends}
+Recommends: niri
+Description: desktop theme switcher for the Niri compositor
+ A small Python/Tkinter desktop application for switching between
+ Neon Blue, Dark, and Light themes for the Niri Wayland compositor.
