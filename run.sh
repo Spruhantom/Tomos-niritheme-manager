@@ -1,0 +1,1 @@
+#!/usr/bin/env sh\nset -eu\ncd "$(dirname "$0")"\nexec python3 niri_theme_manager.py\n
