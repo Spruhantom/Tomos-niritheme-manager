@@ -2,69 +2,67 @@
 
 A small Python/Tkinter desktop app for switching Niri compositor themes.
 
+## Universal Linux installer
+
+The distro detector reads `/etc/os-release`, installs the required build tools,
+builds the native package, and installs it using the system package manager.
+
+Supported distribution families:
+- Arch Linux, Manjaro, EndeavourOS
+- Debian, Ubuntu, Linux Mint, Pop!_OS
+- Fedora, RHEL, CentOS, Rocky Linux, AlmaLinux
+- openSUSE and SUSE Linux Enterprise
+
+Run the universal installer:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Spruhantom/Tomos-niritheme-manager/main/install-linux.sh | bash
+```
+
+The script uses `sudo` when needed, or can be run as root. It installs build
+dependencies through the detected distribution's package manager. Review
+`install-linux.sh` before piping it into Bash if you want to inspect it first.
+
+Unsupported distributions are stopped with a clear message; the installer does
+not guess a package manager.
+
+## Build packages manually
+
+### Arch Linux
+
+```bash
+sudo pacman -S --needed base-devel git
+makepkg -si
+```
+
+### Debian / Ubuntu (.deb)
+
+```bash
+sudo apt install dpkg-dev python3-tk
+bash packaging/build-deb.sh
+sudo apt install ./dist/niri-theme-manager_0.1.0-1_all.deb
+```
+
+### Fedora / RHEL / openSUSE (.rpm)
+
+Install `rpm-build`, Git, and Tkinter development/runtime packages using your
+distribution's package manager, then run:
+
+```bash
+bash packaging/build-rpm.sh
+```
+
+The package will be written to `dist/`.
+
+GitHub Actions also builds Debian and RPM packages as workflow artifacts.
+The Debian package is architecture-independent (`all`); the RPM is
+architecture-independent (`noarch`).
+
 ## Included themes
 
 - **Neon Blue** — deep navy overview with a bright cyan focus ring.
 - **Dark** — charcoal background and soft grey focus ring.
 - **Light** — pale background with a blue focus ring.
-
-## Arch Linux installation
-
-Install the `base-devel` group and Git if they are not already installed:
-
-```bash
-sudo pacman -S --needed base-devel git
-```
-
-Then run the one-line installer:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/Spruhantom/Tomos-niritheme-manager/main/install-arch.sh | bash
-```
-
-The installer clones this repository into a temporary directory and builds and
-installs the package using `makepkg`. Review `install-arch.sh` before running a
-remote installer if you prefer to inspect the commands first.
-
-To build the package manually:
-
-```bash
-git clone https://github.com/Spruhantom/Tomos-niritheme-manager.git
-cd Tomos-niritheme-manager
-makepkg -si
-```
-
-## Debian / Ubuntu (.deb)
-
-Install a downloaded package with:
-
-```bash
-sudo apt install ./niri-theme-manager_0.1.0-1_all.deb
-```
-
-To build from a source checkout, install `dpkg-deb` and run:
-
-```bash
-packaging/build-deb.sh
-```
-
-## Fedora / RPM-based distributions (.rpm)
-
-Install a downloaded package with:
-
-```bash
-sudo dnf install ./niri-theme-manager-0.1.0-1*.noarch.rpm
-```
-
-To build from source, install `rpm-build` and `python3-tkinter`, then run:
-
-```bash
-packaging/build-rpm.sh
-```
-
-GitHub Actions builds both package formats and publishes them as downloadable
-workflow artifacts. The Debian package is architecture-independent (`all`);
-the RPM is architecture-independent (`noarch`).
 
 ## How it works
 
@@ -86,7 +84,7 @@ theme values take precedence over earlier settings.
 
 - Linux running Niri
 - Python 3.10+
-- Tkinter (`tk` on Arch Linux)
+- Tkinter
 - Niri on PATH for automatic validation (optional)
 - `xdg-utils` to open the Niri configuration folder from the app (optional)
 
