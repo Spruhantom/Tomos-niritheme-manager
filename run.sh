@@ -1,1 +1,4 @@
-#!/usr/bin/env sh\nset -eu\ncd "$(dirname "$0")"\nexec python3 niri_theme_manager.py\n
+#!/usr/bin/env sh
+set -eu
+cd "$(dirname "$0")"
+exec python3 niri_theme_manager.py
