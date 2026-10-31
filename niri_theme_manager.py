@@ -80,9 +80,9 @@ def add_include(config_text):
     for existing in config_text.splitlines():
         parts = existing.strip().split(None, 1)
         if len(parts) == 2 and parts[0] == "include" and parts[1].strip() == '"themes/active-theme.kdl"':
-            return config_text if config_text.endswith("\\n") else config_text + "\\n"
+            return config_text if config_text.endswith("\n") else config_text + "\n"
     prefix = config_text.rstrip()
-    return (prefix + "\\n\\n" if prefix else "") + line + "\\n"
+    return (prefix + "\n\n" if prefix else "") + line + "\n"
 
 def atomic_write(path, content):
     path.parent.mkdir(parents=True, exist_ok=True)
