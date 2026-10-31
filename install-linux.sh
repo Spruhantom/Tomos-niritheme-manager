@@ -12,8 +12,8 @@ if [[ ! -r /etc/os-release ]]; then
 fi
 # shellcheck disable=SC1091
 . /etc/os-release
-DISTRO_ID="\${ID:-unknown}"
-DISTRO_LIKE="\${ID_LIKE:-}"
+DISTRO_ID="${ID:-unknown}"
+DISTRO_LIKE="${ID_LIKE:-}"
 FAMILY="$DISTRO_ID $DISTRO_LIKE"
 
 as_root() {
@@ -27,7 +27,7 @@ as_root() {
   fi
 }
 
-echo "Detected distribution: \${PRETTY_NAME:-$DISTRO_ID}"
+echo "Detected distribution: ${PRETTY_NAME:-$DISTRO_ID}"
 
 if [[ "$FAMILY" =~ (arch|manjaro|endeavouros) ]]; then
   as_root pacman -Sy --needed --noconfirm git base-devel tk
@@ -74,7 +74,7 @@ elif [[ "$FAMILY" =~ (opensuse|suse|sles) ]]; then
   as_root zypper --non-interactive install "$RPM_FILE"
 
 else
-  echo "Unsupported distribution: ID=\${ID:-unknown}, ID_LIKE=\${ID_LIKE:-none}" >&2
+  echo "Unsupported distribution: ID=${ID:-unknown}, ID_LIKE=${ID_LIKE:-none}" >&2
   echo "Supported families: Arch, Debian/Ubuntu, Fedora/RHEL, and openSUSE." >&2
   exit 1
 fi
