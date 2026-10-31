@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Niri Theme Manager
+Comment=Switch between Niri compositor themes
+Exec=niri-theme-manager
+Icon=preferences-desktop-theme
+Terminal=false
+Categories=Settings;DesktopSettings;
