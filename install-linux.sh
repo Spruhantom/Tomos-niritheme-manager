@@ -30,7 +30,7 @@ as_root() {
 echo "Detected distribution: ${PRETTY_NAME:-$DISTRO_ID}"
 
 if [[ "$FAMILY" =~ (arch|manjaro|endeavouros) ]]; then
-  as_root pacman -Sy --needed --noconfirm git base-devel tk
+  as_root pacman -S --needed --noconfirm git base-devel tk
   command -v makepkg >/dev/null 2>&1 || { echo "makepkg is unavailable; install base-devel." >&2; exit 1; }
   git clone --depth 1 "$REPO_URL" "$WORKDIR/source"
   cd "$WORKDIR/source"
