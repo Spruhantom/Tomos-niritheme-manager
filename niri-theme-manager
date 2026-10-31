@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/python /usr/share/niri-theme-manager/niri_theme_manager.py "$@"
