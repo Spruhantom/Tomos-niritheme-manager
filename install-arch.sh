@@ -15,7 +15,7 @@ if ! command -v git >/dev/null 2>&1; then
   exit 1
 fi
 if [[ "$(id -u)" -eq 0 ]]; then
-  printf '%s\\n' 'Do not run this installer as root; makepkg must run as a normal user.' >&2
+  echo 'Do not run this installer as root; makepkg must run as a normal user.' >&2
   exit 1
 fi
 if ! command -v makepkg >/dev/null 2>&1; then
