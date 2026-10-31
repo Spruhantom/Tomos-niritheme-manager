@@ -27,6 +27,19 @@ as_root() {
   fi
 }
 
+check_python_version() {
+  if ! command -v python3 >/dev/null 2>&1; then
+    echo "Python 3 is required but was not found." >&2
+    exit 1
+  fi
+  if ! python3 -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 10) else 1)'; then
+    echo "Python 3.10 or newer is required to install Niri Theme Manager." >&2
+    python3 --version >&2
+    exit 1
+  fi
+  echo "Python version check passed: $(python3 --version)"
+}
+
 echo "Detected distribution: ${PRETTY_NAME:-$DISTRO_ID}"
 
 if [[ "$FAMILY" =~ (arch|manjaro|endeavouros) ]]; then
@@ -35,7 +48,8 @@ if [[ "$FAMILY" =~ (arch|manjaro|endeavouros) ]]; then
     echo "The script will use sudo for package installation and makepkg will run safely as your user." >&2
     exit 1
   fi
-  as_root pacman -S --needed --noconfirm git base-devel tk
+  as_root pacman -S --needed --noconfirm git base-devel tk python
+  check_python_version
   command -v makepkg >/dev/null 2>&1 || { echo "makepkg is unavailable; install base-devel." >&2; exit 1; }
   git clone --depth 1 "$REPO_URL" "$WORKDIR/source"
   cd "$WORKDIR/source"
@@ -43,7 +57,8 @@ if [[ "$FAMILY" =~ (arch|manjaro|endeavouros) ]]; then
 
 elif [[ "$FAMILY" =~ (debian|ubuntu|linuxmint|pop) ]]; then
   as_root apt-get update
-  as_root apt-get install -y git dpkg-dev python3-tk
+  as_root apt-get install -y git dpkg-dev python3 python3-tk
+  check_python_version
   git clone --depth 1 "$REPO_URL" "$WORKDIR/source"
   cd "$WORKDIR/source"
   bash packaging/build-deb.sh
@@ -51,13 +66,14 @@ elif [[ "$FAMILY" =~ (debian|ubuntu|linuxmint|pop) ]]; then
 
 elif [[ "$FAMILY" =~ (fedora|rhel|centos|rocky|almalinux) ]]; then
   if command -v dnf >/dev/null 2>&1; then
-    as_root dnf install -y git rpm-build python3-tkinter tar gzip
+    as_root dnf install -y git rpm-build python3 python3-tkinter tar gzip
   elif command -v yum >/dev/null 2>&1; then
-    as_root yum install -y git rpm-build python3-tkinter tar gzip
+    as_root yum install -y git rpm-build python3 python3-tkinter tar gzip
   else
     echo "Neither dnf nor yum was found." >&2
     exit 1
   fi
+  check_python_version
   git clone --depth 1 "$REPO_URL" "$WORKDIR/source"
   cd "$WORKDIR/source"
   bash packaging/build-rpm.sh
@@ -70,7 +86,8 @@ elif [[ "$FAMILY" =~ (fedora|rhel|centos|rocky|almalinux) ]]; then
   fi
 
 elif [[ "$FAMILY" =~ (opensuse|suse|sles) ]]; then
-  as_root zypper --non-interactive install git rpm-build python3-tk tar gzip
+  as_root zypper --non-interactive install git rpm-build python3 python3-tk tar gzip
+  check_python_version
   git clone --depth 1 "$REPO_URL" "$WORKDIR/source"
   cd "$WORKDIR/source"
   bash packaging/build-rpm.sh
